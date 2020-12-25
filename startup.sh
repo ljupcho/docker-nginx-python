@@ -9,7 +9,7 @@ docker-compose up -d --scale consumers=0
 # Prepare To-Do Django container
 ######################################################################################
 # docker-compose exec web git checkout master
-# "scripts/migrateWeb.sh"
+"scripts/migrateWeb.sh"
 
 # after all set and done run the consumers
 docker-compose up -d consumers

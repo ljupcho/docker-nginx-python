@@ -4,6 +4,7 @@ services:
     nginx:
       build:
         context: ./nginx
+      container_name: py_nginx
       volumes:
         - ${APP_CODE_WEB_PATH_HOST}:${APP_CODE_WEB_PATH_CONTAINER}
         - ${NGINX_WEB_HOST_LOG_PATH}:/var/log/nginx
@@ -28,6 +29,7 @@ services:
           - INSTALL_CRON=${INSTALL_CRON}
           - WORK_DIR=${APP_CODE_WEB_PATH_CONTAINER}
           - NODE_VERSION=${NODE_VERSION}
+      container_name: py_web
       volumes:
         - ./web/cron/crontab_web:/etc/crontab
         - ${APP_CODE_WEB_PATH_HOST}:${APP_CODE_WEB_PATH_CONTAINER}   
@@ -49,6 +51,7 @@ services:
           - INSTALL_CRON=${INSTALL_CRON}
           - INSTALL_SUPERVISOR=${INSTALL_SUPERVISOR}
           - WORK_DIR=${APP_CODE_WEB_PATH_CONTAINER}
+      container_name: py_consumers
       volumes:
           - ./consumers/supervisor/web.conf:/etc/supervisor/conf.d/web.conf 
           - ${APP_CODE_WEB_PATH_HOST}:${APP_CODE_WEB_PATH_CONTAINER}   
@@ -65,6 +68,7 @@ services:
         context: ./mysql
         args:
           - MYSQL_VERSION=${MYSQL_VERSION}
+      container_name: py_db
       environment:
         - MYSQL_DATABASE=${MYSQL_DATABASE}
         - MYSQL_USER=${MYSQL_USER}
@@ -81,6 +85,7 @@ services:
 
     redis:
       build: ./redis
+      container_name: py_redis
       volumes:
         - ${DATA_PATH_HOST}/redis:/data
       ports:
